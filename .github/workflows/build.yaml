@@ -45,5 +45,5 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"faesslerm_carrental" /o:"faesslerm" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           & dotnet restore .\source\CarRent.sln
           & dotnet build .\source\CarRent.sln
-          & dotnet test .\source\CarRent.sln
+          & dotnet test .\source\CarRent.sln --collect "Code Coverage"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
