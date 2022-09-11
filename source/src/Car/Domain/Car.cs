@@ -2,7 +2,7 @@
 
 namespace CarRent.Car.Domain
 {
-    public class Car : Entity
+    public class Car : Entity, IAggregateRoot
     {
         public string CarNumber { get; }
 
