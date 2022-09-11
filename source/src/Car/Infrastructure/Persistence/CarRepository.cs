@@ -1,48 +1,55 @@
 ﻿
 using CarRent.Car.Domain;
+using CarRent.Car.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarRent.Car.Persistence
 {
     public class CarRepository : ICarRepository
     {
-        private readonly List<Domain.Car> _context;
+        private readonly CarContext _context;
 
-        public CarRepository(List<Domain.Car> context)
+        public CarRepository(CarContext context)
         {
             _context = context;
         }
 
         public Domain.Car GetById(Guid id)
         {
-            return _context
-                .Where(car => car.Id.Equals(id))
-                .GetEnumerator()
-                .Current;
+            return _context.Cars
+                .Where(car => id.Equals(car.Id))
+                .Include(car => car.Brand)
+                .Include(car => car.CarClass)
+                .Include(car => car.Type)
+                .First();
         }
 
         public Domain.Car GetByCarNumber(string carNumber)
         {
-            return _context
-                .Where(car => car.CarNumber.Equals(carNumber))
-                .GetEnumerator()
-                .Current;
+            return _context.Cars
+                .Where(car => carNumber.Equals(car.CarNumber))
+                .Include(car => car.Brand)
+                .Include(car => car.CarClass)
+                .Include(car => car.Type)
+                .First();
         }
 
         public void Add(Domain.Car car)
         {
-            _context.Add(car);
+            _context.Cars.Add(car);
+            _context.SaveChanges();
         }
 
         public void Update(Domain.Car car)
         {
-            var index = _context.IndexOf(car);
-            _context.RemoveAt(index);
-            _context.Insert(index, car);
+            _context.Cars.Update(car);
+            _context.SaveChanges();
         }
 
         public void Remove(Domain.Car car)
         {
-            _context.Remove(car);
+            _context.Cars.Remove(car);
+            _context.SaveChanges();
         }
     }
 }
