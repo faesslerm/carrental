@@ -1,8 +1,9 @@
-﻿namespace CarRent.Car.Domain
+﻿using CarRent.Common.Domain;
+
+namespace CarRent.Car.Domain
 {
-    public class CarClass
+    public class CarClass : Entity
     {
-        public Guid Id { get; }
         public string Name { get; }
 
         public decimal DailyPrice { get; }
