@@ -42,7 +42,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"faesslerm_carrental" /o:"faesslerm" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/bin/**/*,**/obj/**/*" /d:sonar.cs.opencover.reportsPaths="CoverageResults\coverage.opencover.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"faesslerm_carrental" /o:"faesslerm" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=./**/coverage.opencover.xml
+          & dotnet restore .\source\CarRent.sln
           & dotnet build .\source\CarRent.sln
-          & dotnet test .\source\tests\CarRent.Tests.csproj /p:CollectCoverage=true /p:CoverletOutput="../CoverageResults/" /p:MergeWith="../CoverageResults/coverage.json" /p:CoverletOutputFormat=opencover
+          & dotnet test .\source\CarRent.sln --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
