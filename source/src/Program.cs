@@ -1,8 +1,14 @@
+using CarRent.Car.Domain;
+using CarRent.Car.Infrastructure.Persistence;
+using CarRent.Car.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddDbContext<CarContext>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
