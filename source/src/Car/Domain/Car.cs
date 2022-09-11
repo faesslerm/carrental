@@ -4,13 +4,13 @@ namespace CarRent.Car.Domain
 {
     public class Car : Entity, IAggregateRoot
     {
-        public string CarNumber { get; }
-
-        public CarClass CarClass { get; }
-
-        public Brand Brand { get; }
-
-        public Type Type { get; }
+        public string CarNumber { get; set; }
+        public Guid CarClassId { get; set; }
+        public CarClass CarClass { get; set; }
+        public Guid BrandId { get; set; }
+        public Brand Brand { get; set; }
+        public Guid TypeId { get; set; }
+        public Type Type { get; set; }
 
     }
 }
