@@ -17,11 +17,11 @@ namespace CarRent.Car.Api
 
         // GET: api/<CarController>
         [HttpGet]
-        public IEnumerable<CarResponse> Get()
+        public IEnumerable<CarDto> Get()
         {
-            return new CarResponse[]
+            return new CarDto[]
             {
-                new CarResponse()
+                new CarDto()
                 {
                     Id = Guid.NewGuid(),
                     CarNumber = "XW82",
@@ -34,15 +34,41 @@ namespace CarRent.Car.Api
 
         // GET api/<CarController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public CarDto Get(Guid id)
         {
-            return "value";
+            var car = _repository.GetById(id);
+            return new CarDto()
+            {
+                Id = car.Id,
+                CarNumber = car.CarNumber,
+                Brand = car.Brand.Name,
+                Type = car.Type.Name,
+                CarClass = car.CarClass.Name,
+            };
         }
 
         // POST api/<CarController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public Guid Post([FromBody] CarDto dto)
         {
+            var car = new Domain.Car()
+            {
+                CarNumber = dto.CarNumber,
+                CarClass = new CarClass()
+                {
+                    Name = dto.CarClass,
+                },
+                Brand = new Brand()
+                {
+                    Name = dto.Brand
+                },
+                Type = new Domain.Type()
+                {
+                    Name = dto.Type
+                }
+            };
+            _repository.Add(car);
+            return car.Id;
         }
 
         // PUT api/<CarController>/5
@@ -53,8 +79,10 @@ namespace CarRent.Car.Api
 
         // DELETE api/<CarController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            var car = _repository.GetById(id);
+            _repository.Remove(car);
         }
     }
 }
