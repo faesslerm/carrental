@@ -2,7 +2,7 @@
 
 namespace CarRent.Car.Api
 {
-    public class CarResponse
+    public class CarDto
     {
         [JsonPropertyOrder(100)]
         public Guid Id { get; set; }
