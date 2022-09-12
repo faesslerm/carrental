@@ -81,8 +81,5 @@ Das System erstellt einen Mietvertrag basierend auf der Reservation, sobald der 
 ![Domain Model](ressources/DomainModel.png)
 
 ## Whitebox Gesamtsystem
-### Class Diagram
-![Class Diagram](ressources/ClassDiagram.png)
-
 ### Component Diagram - Interfaces
 ![Component Diagram](ressources/ComponentDiagram.png)
